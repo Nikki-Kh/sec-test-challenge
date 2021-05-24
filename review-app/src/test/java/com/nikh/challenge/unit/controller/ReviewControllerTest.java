@@ -42,7 +42,7 @@ public class ReviewControllerTest {
         reviewBean.setAvgScore(5.5f);
         reviewBean.setProductId("BB2406");
 
-        when(authService.authorize(anyString())).thenReturn(true);
+        doNothing().when(authService).authorize(anyString());
 
         when(reviewService.getReview("BB2406")).thenReturn(reviewBean);
         when(reviewService.getReview(not(eq("BB2406")))).thenReturn(null);
