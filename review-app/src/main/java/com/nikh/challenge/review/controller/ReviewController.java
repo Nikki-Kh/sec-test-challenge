@@ -29,9 +29,7 @@ public class ReviewController extends SecurityController{
     public ResponseEntity createReview(@PathVariable("productId") String productId,
                       @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
                       @RequestBody ReviewRequest request) {
-        if (!authorize(authorization)) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to auth");
-        }
+        authorize(authorization);
         reviewService.postReview(prepareReviewBean(productId, request));
         return ResponseEntity.ok("SUCCESS");
     }
@@ -40,9 +38,7 @@ public class ReviewController extends SecurityController{
     public ResponseEntity updateReview(@PathVariable("productId") String productId,
                                         @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
                                         @RequestBody ReviewRequest request) {
-        if (!authorize(authorization)) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to auth");
-        }
+        authorize(authorization);
         reviewService.updateReview(prepareReviewBean(productId, request));
         return ResponseEntity.ok("SUCCESS");
     }
@@ -50,9 +46,7 @@ public class ReviewController extends SecurityController{
     @DeleteMapping
     public ResponseEntity deleteReview(@PathVariable("productId") String productId,
                                         @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        if (!authorize(authorization)) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to auth");
-        }
+        authorize(authorization);
         reviewService.deleteReview(productId);
         return ResponseEntity.ok("SUCCESS");
     }

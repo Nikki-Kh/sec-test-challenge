@@ -11,7 +11,7 @@ public abstract class SecurityController {
         this.authService = authService;
     }
 
-    protected boolean authorize(String token) {
-        return authService.authorize(token);
+    protected void authorize(String token) {
+        authService.authorize(token);
     }
 }

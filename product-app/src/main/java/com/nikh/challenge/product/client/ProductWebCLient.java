@@ -3,6 +3,8 @@ package com.nikh.challenge.product.client;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nikh.challenge.product.dto.ReviewBean;
+import com.nikh.challenge.product.error.exception.ExternalCallException;
+import com.nikh.challenge.product.error.exception.ProductAbsentException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,10 +36,7 @@ public class ProductWebCLient {
                         .retrieve()
                         .toEntity(String.class);
         ResponseEntity<String> response = responseEntityMono.toFuture().get();
-        if (!response.getStatusCode().equals(HttpStatus.OK)
-                || !validateLiveResponse(response.getBody())) {
-            //TODO: throw exception
-        }
+        validateLiveResponse(productId, response);
         return  JsonParser.parseString(response.getBody()).getAsJsonObject();
 
     }
@@ -50,15 +49,26 @@ public class ProductWebCLient {
                         .retrieve()
                         .toEntity(ReviewBean.class);
         ResponseEntity<ReviewBean> response = responseEntityMono.toFuture().get();
-        if (!response.getStatusCode().equals(HttpStatus.OK)
-                || response.getBody() != null) {
-            //TODO: throw exception
-        }
+        validateResponse(productId, response);
         return  response.getBody();
     }
 
-    private boolean validateLiveResponse(String response) {
-        JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
-        return jsonResponse.has("id");
+    private void validateResponse(String productId, ResponseEntity response) {
+        if (response == null
+                || !response.getStatusCode().equals(HttpStatus.OK)
+                || !response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+            throw new ExternalCallException(productId);
+        }
+        if (response.getBody() == null || response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+            throw new ProductAbsentException(productId);
+        }
+    }
+
+    private void validateLiveResponse(String productId, ResponseEntity<String> response) {
+        validateResponse(productId, response);
+        JsonObject jsonResponse = JsonParser.parseString(response.getBody()).getAsJsonObject();
+        if (!jsonResponse.has("id")) {
+            throw new ProductAbsentException(productId);
+        }
     }
 }

@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nikh.challenge.review.dao.UserMapper;
+import com.nikh.challenge.review.error.exception.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,10 @@ public class AuthServiceImpl implements AuthService{
     private final UserMapper userMapper;
 
     @Override
-    public boolean authorize(String token) {
-        return token != null && verifyUser(getPayload(token));
+    public void authorize(String token) {
+        if (token == null || !verifyUser(getPayload(token))) {
+            throw new AuthException();
+        }
     }
 
     private JsonObject getPayload(String token) {
@@ -44,9 +47,7 @@ public class AuthServiceImpl implements AuthService{
         if (userInfo != null && userInfo.has("username") && userInfo.has("password")) {
             String username = userInfo.get("username").getAsString();
             String pass = userInfo.get("password").getAsString();
-            if (userMapper.getUser(username, pass) != null) {
-                return true;
-            }
+            return userMapper.getUser(username, pass) != null;
         }
         return false;
     }
