@@ -1,9 +1,9 @@
 package com.nikh.challenge.unit.service;
 
-import com.nikh.challenge.dao.UserMapper;
-import com.nikh.challenge.dto.UserInfoBean;
-import com.nikh.challenge.service.AuthService;
-import com.nikh.challenge.service.AuthServiceImpl;
+import com.nikh.challenge.review.dao.UserMapper;
+import com.nikh.challenge.review.dto.UserInfoBean;
+import com.nikh.challenge.review.service.AuthService;
+import com.nikh.challenge.review.service.AuthServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.nikh.challenge.dto;
+package com.nikh.challenge.product.dto;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
-package com.nikh.challenge.controller;
+package com.nikh.challenge.review.controller;
 
 
-import com.nikh.challenge.service.AuthService;
+import com.nikh.challenge.review.service.AuthService;
 
 public abstract class SecurityController {
 

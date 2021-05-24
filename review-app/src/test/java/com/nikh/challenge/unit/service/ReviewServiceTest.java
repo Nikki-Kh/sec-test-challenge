@@ -1,10 +1,10 @@
 package com.nikh.challenge.unit.service;
 
-import com.nikh.challenge.dao.ReviewMapper;
+import com.nikh.challenge.review.dao.ReviewMapper;
 
-import com.nikh.challenge.dto.ReviewBean;
-import com.nikh.challenge.service.ReviewService;
-import com.nikh.challenge.service.ReviewServiceImpl;
+import com.nikh.challenge.review.dto.ReviewBean;
+import com.nikh.challenge.review.service.ReviewService;
+import com.nikh.challenge.review.service.ReviewServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,11 @@
-package com.nikh.challenge.service;
+package com.nikh.challenge.review.service;
 
-import com.nikh.challenge.dao.ReviewMapper;
-import com.nikh.challenge.dto.ReviewBean;
+import com.nikh.challenge.review.dao.ReviewMapper;
+import com.nikh.challenge.review.dto.ReviewBean;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

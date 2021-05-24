@@ -1,4 +1,4 @@
-package com.nikh.challenge.service;
+package com.nikh.challenge.review.service;
 
 public interface AuthService {
 

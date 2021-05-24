@@ -1,6 +1,6 @@
-package com.nikh.challenge.controller;
+package com.nikh.challenge.product.controller;
 
-import com.nikh.challenge.service.ProductInfoService;
+import com.nikh.challenge.product.service.ProductInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,8 @@ public class ProductController {
     private final ProductInfoService productInfoService;
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity getProductInfo(@PathVariable("productId") String productId,
-                                         RequestEntity requestEntity) {
-        String response = productInfoService.getProductInfo(productId, requestEntity);
+    public ResponseEntity getProductInfo(@PathVariable("productId") String productId) {
+        String response = productInfoService.getProductInfo(productId);
         return ResponseEntity.ok(response);
     }
 

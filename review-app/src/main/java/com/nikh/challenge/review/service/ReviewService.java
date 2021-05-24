@@ -1,6 +1,6 @@
-package com.nikh.challenge.service;
+package com.nikh.challenge.review.service;
 
-import com.nikh.challenge.dto.ReviewBean;
+import com.nikh.challenge.review.dto.ReviewBean;
 
 public interface ReviewService {
 

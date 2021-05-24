@@ -1,11 +1,11 @@
 package com.nikh.challenge.unit.controller;
 
 
-import com.nikh.challenge.controller.ReviewController;
-import com.nikh.challenge.dto.ReviewBean;
-import com.nikh.challenge.dto.ReviewRequest;
-import com.nikh.challenge.service.AuthService;
-import com.nikh.challenge.service.ReviewService;
+import com.nikh.challenge.review.controller.ReviewController;
+import com.nikh.challenge.review.dto.ReviewBean;
+import com.nikh.challenge.review.dto.ReviewRequest;
+import com.nikh.challenge.review.service.AuthService;
+import com.nikh.challenge.review.service.ReviewService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

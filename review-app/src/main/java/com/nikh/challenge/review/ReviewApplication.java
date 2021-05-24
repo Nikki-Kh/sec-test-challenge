@@ -1,4 +1,4 @@
-package com.nikh.challenge;
+package com.nikh.challenge.review;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

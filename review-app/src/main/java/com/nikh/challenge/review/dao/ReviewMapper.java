@@ -1,15 +1,23 @@
-package com.nikh.challenge.dao;
+package com.nikh.challenge.review.dao;
 
-import com.nikh.challenge.dto.ReviewBean;
+import com.nikh.challenge.review.dto.ReviewBean;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
 
-    @Select("SELECT * from reviews were product_id = #{productId}")
+    @Select("SELECT * from reviews where product_id = #{productId} LIMIT 1")
+    @Results({
+            @Result(column = "product_id", property = "productId"),
+            @Result(column = "avg_score", property = "avgScore"),
+            @Result(column = "review_num", property = "reviewNum")
+    })
     ReviewBean getReviewById(@Param("productId") String productId);
 
-    @Delete("DELETE from reviews were product_id = #{productId}")
+
+    @Delete("DELETE from reviews where product_id = #{productId}")
     int deleteReviewById(@Param("productId") String productId);
 
     @Insert("INSERT into reviews (product_id, avg_score, review_num) " +
