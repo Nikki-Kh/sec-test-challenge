@@ -14,6 +14,10 @@ To start both apps at the same time run the following command fro root project d
 
 3) ### Try API
 
+call the following url with Postman or any other tool:
+
+```localhost:8082/product/BB5476```
+
 
 ***
 
