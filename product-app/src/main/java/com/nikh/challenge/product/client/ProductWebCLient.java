@@ -3,6 +3,7 @@ package com.nikh.challenge.product.client;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nikh.challenge.product.dto.ReviewBean;
+import com.nikh.challenge.product.error.exception.ApiException;
 import com.nikh.challenge.product.error.exception.ExternalCallException;
 import com.nikh.challenge.product.error.exception.ProductAbsentException;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class ProductWebCLient {
 
     @SneakyThrows
     public JsonObject getLiveInfo(String productId) {
-
+        try {
         Mono<ResponseEntity<String>> responseEntityMono =
                 webClient.get().uri(liveInfoServiceUrl + productId)
                         .accept(MediaType.APPLICATION_JSON)
@@ -38,25 +39,47 @@ public class ProductWebCLient {
         ResponseEntity<String> response = responseEntityMono.toFuture().get();
         validateLiveResponse(productId, response);
         return  JsonParser.parseString(response.getBody()).getAsJsonObject();
-
+        }
+        catch (ApiException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            if (e.getMessage().contains("404")) {
+                throw new ProductAbsentException(productId);
+            } else {
+                throw new ExternalCallException(productId);
+            }
+        }
     }
 
     @SneakyThrows
     public ReviewBean getReviewInfo(String productId) {
-        Mono<ResponseEntity<ReviewBean>> responseEntityMono =
-                webClient.get().uri(reviewServiceUrl + productId)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .retrieve()
-                        .toEntity(ReviewBean.class);
-        ResponseEntity<ReviewBean> response = responseEntityMono.toFuture().get();
-        validateResponse(productId, response);
-        return  response.getBody();
+        try {
+            Mono<ResponseEntity<ReviewBean>> responseEntityMono =
+                    webClient.get().uri(reviewServiceUrl + productId)
+                            .accept(MediaType.APPLICATION_JSON)
+                            .retrieve()
+                            .toEntity(ReviewBean.class);
+            ResponseEntity<ReviewBean> response = responseEntityMono.toFuture().get();
+            validateResponse(productId, response);
+            return response.getBody();
+        }
+        catch (ApiException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            if (e.getMessage().contains("404")) {
+                throw new ProductAbsentException(productId);
+            } else {
+                throw new ExternalCallException(productId);
+            }
+        }
     }
 
     private void validateResponse(String productId, ResponseEntity response) {
         if (response == null
                 || !response.getStatusCode().equals(HttpStatus.OK)
-                || !response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                && !response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
             throw new ExternalCallException(productId);
         }
         if (response.getBody() == null || response.getStatusCode().equals(HttpStatus.NOT_FOUND)) {

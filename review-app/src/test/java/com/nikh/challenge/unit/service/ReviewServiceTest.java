@@ -3,6 +3,7 @@ package com.nikh.challenge.unit.service;
 import com.nikh.challenge.review.dao.ReviewMapper;
 
 import com.nikh.challenge.review.dto.ReviewBean;
+import com.nikh.challenge.review.error.exception.DBException;
 import com.nikh.challenge.review.service.ReviewService;
 import com.nikh.challenge.review.service.ReviewServiceImpl;
 import org.junit.Before;
@@ -70,7 +71,7 @@ public class ReviewServiceTest {
         reviewBean2.setProductId("BB2407");
 
         assertDoesNotThrow(() -> reviewService.updateReview(reviewBean));
-        assertThrows(RuntimeException.class, () -> reviewService.updateReview(reviewBean2));
+        assertThrows(DBException.class, () -> reviewService.updateReview(reviewBean2));
     }
 
     @Test
@@ -86,13 +87,13 @@ public class ReviewServiceTest {
         reviewBean2.setProductId("BB2407");
 
         assertDoesNotThrow(() -> reviewService.postReview(reviewBean));
-        assertThrows(RuntimeException.class, () -> reviewService.postReview(reviewBean2));
+        assertThrows(DBException.class, () -> reviewService.postReview(reviewBean2));
 
     }
 
     @Test
     public void testDelete() {
         assertDoesNotThrow(() -> reviewService.deleteReview("BB2406"));
-        assertThrows(RuntimeException.class, () -> reviewService.deleteReview("BB2407"));
+        assertThrows(DBException.class, () -> reviewService.deleteReview("BB2407"));
     }
 }

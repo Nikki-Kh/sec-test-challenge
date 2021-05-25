@@ -2,6 +2,7 @@ package com.nikh.challenge.unit.service;
 
 import com.nikh.challenge.review.dao.UserMapper;
 import com.nikh.challenge.review.dto.UserInfoBean;
+import com.nikh.challenge.review.error.exception.AuthException;
 import com.nikh.challenge.review.service.AuthService;
 import com.nikh.challenge.review.service.AuthServiceImpl;
 import org.junit.Before;
@@ -52,13 +53,11 @@ public class AuthServiceTest {
 
     @Test
     public void testAuthSuccess() {
-        boolean result = authService.authorize(correctToken);
-        assertEquals(true, result);
+        assertDoesNotThrow(() -> authService.authorize(correctToken));
     }
 
     @Test
     public void testAuthFailed() {
-        boolean result = authService.authorize(incorrectToken);
-        assertEquals(false, result);
+        assertThrows(AuthException.class, () -> authService.authorize(incorrectToken));
     }
 }

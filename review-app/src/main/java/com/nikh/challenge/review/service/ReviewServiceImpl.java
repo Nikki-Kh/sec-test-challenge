@@ -2,6 +2,7 @@ package com.nikh.challenge.review.service;
 
 import com.nikh.challenge.review.dao.ReviewMapper;
 import com.nikh.challenge.review.dto.ReviewBean;
+import com.nikh.challenge.review.error.exception.DBException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,21 +23,21 @@ public class ReviewServiceImpl implements ReviewService{
     public void updateReview(ReviewBean review) {
         int dbResponse = reviewMapper.updateReview(review);
         if (dbResponse != 1) {
-            throw new RuntimeException("failed to update db");
+            throw new DBException();
         }
     }
 
     public void postReview(ReviewBean review) {
         int dbResponse = reviewMapper.insertReview(review);
         if (dbResponse != 1) {
-            throw new RuntimeException("failed to update db");
+            throw new DBException();
         }
     }
 
     public void deleteReview(String productId) {
         int dbResponse = reviewMapper.deleteReviewById(productId);
         if (dbResponse != 1) {
-            throw new RuntimeException("failed to update db");
+            throw new DBException();
         }
     }
 

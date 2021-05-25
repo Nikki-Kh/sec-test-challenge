@@ -1,0 +1,22 @@
+version: '2'
+services:
+  review-server:
+    container_name: review-server
+    build:
+      context: review-app
+      dockerfile: Dockerfile
+    image: review-app
+    ports:
+      - 8081:8081
+
+
+  product-server:
+    container_name: product-server
+    build:
+      context: product-app
+      dockerfile: Dockerfile
+    image: product-app
+    ports:
+      - 8082:8082
+    environment:
+      - REST_ENDPOINT_REVIEW=http://review-server:8081/review/
